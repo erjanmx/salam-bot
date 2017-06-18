@@ -72,3 +72,5 @@ class Bot:
 
         self.api_client.send_message(user.friend(), content, self.request['type'])
 
+    def event_message_update(self):
+        pass
