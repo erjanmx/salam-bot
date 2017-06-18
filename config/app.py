@@ -1,0 +1,3 @@
+DEBUG = True
+SALAM_BOT_TOKEN = ''
+NAMBA_ONE_API_TOKEN = ''
