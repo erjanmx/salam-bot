@@ -22,7 +22,11 @@ class User(Model):
         uf = UserFriend.where('user_1', self.id).or_where('user_2', self.id).first()
 
         if uf:
-            friend_id = uf.user_1 if uf.user_2 == self.id else uf.user_2
+            if uf.user_2 == self.id:
+                friend_id = uf.user_1
+                uf.update({'started_at': None})
+            else:
+                friend_id = uf.user_2
         else:
             friend_id = 0
 
@@ -45,7 +49,7 @@ class User(Model):
         if not friend:
             return False
 
-        return UserFriend.create(user_1=self.id, user_2=friend.id)
+        return UserFriend.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
 
     @scope
     def active(self, query):
