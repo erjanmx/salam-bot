@@ -56,7 +56,8 @@ class User(Model):
     def free(self, query):
         users_list = UserFriend.select_raw('group_concat(user_1, ",", user_2) as ids').first()
 
-        user_ids = users_list.ids or []
-        ids = [int(u_id) for u_id in user_ids if u_id.isdigit()]
+        ids = []
+        if users_list and users_list.ids:
+            ids = [int(u_id) for u_id in str(users_list.ids).split(',') if u_id.isdigit()]
 
         return query.where_not_in('id', ids)
