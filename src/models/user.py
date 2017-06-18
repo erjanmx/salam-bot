@@ -42,13 +42,10 @@ class User(Model):
                      .order_by(db.raw('RAND()')) \
                      .first()
 
-        result = True
-        try:
-            UserFriend.create(user_1=self.id, user_2=friend.id)
-        except:
-            result = False
+        if not friend:
+            return False
 
-        return result
+        return UserFriend.create(user_1=self.id, user_2=friend.id)
 
     @scope
     def active(self, query):

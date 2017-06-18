@@ -22,7 +22,7 @@ class NambaOne:
     def post(self, url, params):
         response = requests.post(self.base_url + url, data=params, headers=self.headers).json()
         if not response['success']:
-            raise Exception('API_CALL_ERROR')
+            raise ValueError(response['message'])
         
         return response['data']
         
