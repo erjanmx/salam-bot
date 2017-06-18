@@ -4,6 +4,7 @@ from config.i18n import locales
 from . namba_one import NambaOne
 from . bot_commands import BotCommands
 from config.app import NAMBA_ONE_API_TOKEN
+from . models.user_friend import UserFriend
 
 log.basicConfig(filename='salam-bot.log', level=log.INFO)
 
@@ -16,6 +17,8 @@ class Bot:
         'user/follow': 'event_user_follow',
         'user/unfollow': 'event_user_unfollow',
         'message/update': 'event_message_update',
+
+        'cron/close_idle_chats': 'event_close_idle_chats',
     }
 
     def __init__(self, request_body):
@@ -25,7 +28,7 @@ class Bot:
         self.api_client = NambaOne(NAMBA_ONE_API_TOKEN)
 
     def run(self):
-        log.info(self.event)
+        # log.info(self.event)
         getattr(self, self.events[self.event])()
 
     def event_user_follow(self):
@@ -74,3 +77,12 @@ class Bot:
 
     def event_message_update(self):
         pass
+
+    def event_close_idle_chats(self):
+        idle_chats = UserFriend.idle().get()
+        for chat in idle_chats:
+            user = User.find(chat.user_1)
+            self.api_client.send_message(user, 'message_chat_close_friend')
+            user.set_status('active')
+            self.api_client.send_message(User.find(chat.user_2), 'message_chat_close_user')
+            chat.delete()
