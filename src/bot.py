@@ -43,8 +43,8 @@ class Bot:
     def event_user_unfollow(self):
         user = User.find_or_fail(self.request['id'])
         if user.friend():
-            user.del_friend()
             self.api_client.send_message(user.friend(), 'message_friend_gone')
+            user.del_friend()
         user.set_status('not_active')
 
     def event_new_message(self):
