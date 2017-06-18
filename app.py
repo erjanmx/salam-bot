@@ -1,9 +1,12 @@
 import json
+import logging as log
 from src.bot import Bot
 from config.app import *
 from flask import Flask, request, abort, jsonify
 
 app = Flask(__name__)
+
+log.basicConfig(filename='salam-bot.log')
 
 
 @app.route('/', methods=['POST'])
@@ -24,8 +27,7 @@ def entry():
             'success': 'true'
         })
     except Exception as e:
-        if DEBUG:
-            print(e)
+        log.error(e)
         abort(404)
 
 
