@@ -12,7 +12,7 @@ log.basicConfig(filename='salam-bot.log')
 @app.route('/', methods=['POST'])
 def entry():
     try:
-        if request.args.get('_token') != SALAM_BOT_TOKEN:
+        if request.args.get(SALAM_BOT_TOKEN_KEY) != SALAM_BOT_TOKEN_VALUE:
             raise Exception('BAD_TOKEN')
 
         bot = Bot(
