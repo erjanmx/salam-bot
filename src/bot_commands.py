@@ -5,7 +5,7 @@ def user_unfriend(func):
     def wrapper(self):
         friend = self.user.friend()
         if friend:
-            self.api_client.send_message(friend, 'message_friend_gone')
+            self.send_message(friend, 'message_friend_gone')
             self.user.del_friend()
 
         func(self)
@@ -21,9 +21,9 @@ class BotCommands:
         'search',
     )
 
-    def __init__(self, user, api_client):
+    def __init__(self, user, send_message):
         self.user = user
-        self.api_client = api_client
+        self.send_message = send_message
 
     def run(self, command):
         run = False
@@ -38,27 +38,26 @@ class BotCommands:
         return run
 
     def help(self):
-        self.api_client.send_message(self.user, 'message_help')
+        self.send_message(self.user, 'message_help')
 
     @user_unfriend
     def stop(self):
         self.user.set_status('not_active')
-        self.api_client.send_message(self.user, 'message_inactive')
+        self.send_message(self.user, 'message_inactive')
 
     @user_unfriend
     def start(self):
         self.user.set_status('active')
-        self.api_client.send_message(self.user, 'message_active')
+        self.send_message(self.user, 'message_active')
 
     @user_unfriend
     def search(self):
         self.user.set_status('active')
-        self.api_client.send_message(self.user, 'message_friend_search')
+        self.send_message(self.user, 'message_friend_search')
 
         if not self.user.add_friend():
-            self.api_client.send_message(self.user, 'message_friend_not_found')
+            self.send_message(self.user, 'message_friend_not_found')
         else:
             self.user.friend().set_status('idle')
-            self.api_client.send_message(self.user, 'message_friend_found')
-            self.api_client.send_message(self.user.friend(), 'message_friend_found_user')
-
+            self.send_message(self.user, 'message_friend_found')
+            self.send_message(self.user.friend(), 'message_friend_found_user')

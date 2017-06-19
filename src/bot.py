@@ -41,12 +41,12 @@ class Bot:
             'chat_id': self.api_client.create_chat(self.request['id'])['id']
         })
 
-        self.api_client.send_message(self.user, 'message_choose_language')
+        self.__send_message(self.user, 'message_choose_language')
 
     def event_user_unfollow(self):
         user = User.find_or_fail(self.request['id'])
         if user.friend():
-            self.api_client.send_message(user.friend(), 'message_friend_gone')
+            self.__send_message(user.friend(), 'message_friend_gone')
             user.del_friend()
         user.set_status('not_active')
 
@@ -57,23 +57,23 @@ class Bot:
         if user.lang == '-':
             if content.isdigit() and 0 < int(content) < len(locales):
                 user.update({'lang': list(locales.keys())[int(content)]})
-                self.api_client.send_message(user, 'message_help')
+                self.__send_message(user, 'message_help')
             else:
-                self.api_client.send_message(user, 'message_choose_language')
+                self.__send_message(user, 'message_choose_language')
             return
 
-        if getattr(BotCommands(user, self.api_client), 'run')(content.lower()):
+        if getattr(BotCommands(user, self.__send_message), 'run')(content.lower()):
             return
 
         if not user.friend():
             user.set_status('active')
-            self.api_client.send_message(user, 'message_no_friend')
+            self.__send_message(user, 'message_no_friend')
             return
 
         if self.request['type'] == 'text/plain':
             content = '{}: {}'.format(locales[user.lang]['text_friend'], content)
 
-        self.api_client.send_message(user.friend(), content, self.request['type'])
+        self.__send_message(user.friend(), content, self.request['type'])
 
     def event_message_update(self):
         pass
@@ -82,7 +82,13 @@ class Bot:
         idle_chats = UserFriend.idle().get()
         for chat in idle_chats:
             user = User.find(chat.user_1)
-            self.api_client.send_message(user, 'message_chat_close_friend')
+            self.__send_message(user, 'message_chat_close_friend')
             user.set_status('active')
-            self.api_client.send_message(User.find(chat.user_2), 'message_chat_close_user')
+            self.__send_message(User.find(chat.user_2), 'message_chat_close_user')
             chat.delete()
+
+    def __send_message(self, user, content, content_type = 'text/plain'):
+        if content in locales[user.lang]:
+            content = locales[user.lang][content]
+
+        self.api_client.send_message(user.chat_id, content, content_type)
