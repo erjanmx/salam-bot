@@ -1,6 +1,7 @@
 from orator.orm import Factory
 from src.models.user import User
 from src.models.user_friend import UserFriend
+
 factory = Factory()
 
 
@@ -10,7 +11,7 @@ def users_factory(fake):
         'id': fake.random_int(),
         'name': fake.name(),
         'chat_id': fake.random_int(),
-        'lang': 'ru',
+        'lang': '-',
         'status': 1,
         'gender': 'M',
     }
@@ -20,4 +21,3 @@ def userfriends_factory(fake):
     return {
         'started_at': None,
     }
-
