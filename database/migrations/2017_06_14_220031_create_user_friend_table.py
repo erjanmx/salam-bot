@@ -11,6 +11,7 @@ class CreateUserFriendTable(Migration):
             table.increments('id')
             table.integer('user_1').unique()
             table.integer('user_2').unique()
+            table.timestamp('started_at')
 
             table.foreign('user_1').references('id').on('users')
             table.foreign('user_2').references('id').on('users')
