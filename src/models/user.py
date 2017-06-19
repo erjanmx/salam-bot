@@ -4,6 +4,7 @@ from . user_friend import UserFriend
 
 
 class User(Model):
+    __incrementing__ = False
     __fillable__ = ['id', 'chat_id', 'name', 'lang', 'gender', 'status']
 
     statuses = {
@@ -36,6 +37,7 @@ class User(Model):
         return UserFriend.where('user_1', self.id).or_where('user_2', self.id).delete()
 
     def add_friend(self):
+        added = False
         gender_order = 'asc' if self.gender == 'M' else 'desc'
 
         friend = User.free() \
@@ -46,10 +48,13 @@ class User(Model):
                      .order_by(db.raw('RAND()')) \
                      .first()
 
-        if not friend:
-            return False
+        try:
+            UserFriend.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
+            added = True
+        except:
+            pass # todo logging
 
-        return UserFriend.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
+        return added            
 
     @scope
     def active(self, query):
