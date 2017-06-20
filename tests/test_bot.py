@@ -87,7 +87,7 @@ class TestBot(unittest.TestCase):
         
         self.__run_bot('message/new', {
             'sender_id': user_id,
-            'content': '1',
+            'content': '2',
         })
 
         n1_send_message.assert_called_once_with(user_chat_id, locales[lang]['message_help'], mock.ANY)
