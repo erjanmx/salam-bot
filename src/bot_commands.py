@@ -28,6 +28,16 @@ class BotCommands:
     def run(self, command):
         run = False
 
+        if self.user.lang == '-':
+            if command.isdigit() and 0 < int(command) < len(locales):
+                self.user.update({
+                    'lang': list(locales.keys())[int(command)]
+                })
+                self.send_message(self.user, 'message_help')
+            else:
+                self.send_message(self.user, 'message_choose_language')
+            return True
+
         commands = {cmd: locales[self.user.lang][cmd] for cmd in self.commands}
         for c_key, c_val in commands.items():
             if c_val == command:
