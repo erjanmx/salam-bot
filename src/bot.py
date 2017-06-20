@@ -4,7 +4,7 @@ from config.i18n import locales
 from . namba_one import NambaOne
 from . bot_commands import BotCommands
 from config.app import NAMBA_ONE_API_TOKEN
-from . models.user_friend import UserFriend
+from . models.chat import Chat
 
 log.basicConfig(filename='salam-bot.log', level=log.INFO)
 
@@ -79,7 +79,7 @@ class Bot:
         pass
 
     def event_close_idle_chats(self):
-        idle_chats = UserFriend.idle().get()
+        idle_chats = Chat.idle().get()
         for chat in idle_chats:
             user = User.find(chat.user_1)
             self.__send_message(user, 'message_chat_close_friend')

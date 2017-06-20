@@ -1,7 +1,7 @@
 import unittest
 from src.models.model import db
 from src.models.user import User
-from src.models.user_friend import UserFriend
+from src.models.chat import Chat
 from database.factories.model_factory import factory
 
 
@@ -64,7 +64,7 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user_1.friend(), None)
 
     def __make_friends(self, user_1, user_2):
-        factory(UserFriend).create(
+        factory(Chat).create(
             user_1=user_1.id,
             user_2=user_2.id
         )
