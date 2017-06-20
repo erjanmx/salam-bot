@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/erjanmx/salam-bot.svg?branch=master)](https://travis-ci.org/erjanmx/salam-bot)
+
 # Салам бот
 
 Бот для мессенджера [NambaOne](https://namba1.co/) победивший в конкурсе 'BattleBot' устроенной создателями мессенджера
