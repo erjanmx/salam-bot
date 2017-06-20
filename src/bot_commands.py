@@ -40,7 +40,7 @@ class BotCommands:
 
         commands = {cmd: locales[self.user.lang][cmd] for cmd in self.commands}
         for c_key, c_val in commands.items():
-            if c_val == command:
+            if c_val == command or (isinstance(c_val, list) and command in c_val):
                 getattr(self, c_key)()
                 run = True
                 break
