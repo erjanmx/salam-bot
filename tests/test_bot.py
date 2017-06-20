@@ -93,18 +93,6 @@ class TestBot(unittest.TestCase):
 
         n1_send_message.assert_called_once_with(user_chat_id, locales[lang]['message_help'], mock.ANY)
 
-    @mock.patch('src.bot_commands.BotCommands.run')
-    def test_event_new_message_call_command(self, mock_bc):
-        user = factory(User).create(lang='ru')
-
-        content = 'content'
-        self.__run_bot('message/new', {
-            'sender_id': user.id,
-            'content': content,
-        })
-
-        mock_bc.assert_called_once_with(content)
-
     @mock.patch('src.namba_one.NambaOne.send_message')
     def test_event_new_message_with_no_friend(self, n1_send_message):
         user_chat_id = 10

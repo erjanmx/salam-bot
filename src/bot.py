@@ -54,14 +54,6 @@ class Bot:
         user = User.find_or_fail(self.request['sender_id'])
         content = self.request['content'].strip()
 
-        if user.lang == '-':
-            if content.isdigit() and 0 < int(content) < len(locales):
-                user.update({'lang': list(locales.keys())[int(content)]})
-                self.__send_message(user, 'message_help')
-            else:
-                self.__send_message(user, 'message_choose_language')
-            return
-
         if getattr(BotCommands(user, self.__send_message), 'run')(content.lower()):
             return
 
