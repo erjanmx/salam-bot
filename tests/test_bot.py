@@ -4,7 +4,7 @@ from src.bot import Bot
 from config.i18n import locales
 from src.models.model import db
 from src.models.user import User
-from src.models.user_friend import UserFriend
+from src.models.chat import Chat
 from database.factories.model_factory import factory
 
 
@@ -55,7 +55,7 @@ class TestBot(unittest.TestCase):
         user_1 = factory(User).create()
         user_2 = factory(User).create()
         
-        factory(UserFriend).create(
+        factory(Chat).create(
             user_1=user_1.id,
             user_2=user_2.id
         )
@@ -126,7 +126,7 @@ class TestBot(unittest.TestCase):
         
         user_1 = factory(User).create(lang='ru')
         user_2 = factory(User).create(chat_id=user_2_chat_id, lang='ru')
-        factory(UserFriend).create(
+        factory(Chat).create(
             user_1=user_1.id,
             user_2=user_2.id
         )
@@ -148,7 +148,7 @@ class TestBot(unittest.TestCase):
         user_1 = factory(User).create(chat_id = user_1_chat_id)
         user_2 = factory(User).create(chat_id = user_2_chat_id)
         
-        chat = factory(UserFriend).create(
+        chat_1 = factory(Chat).create(
             user_1=user_1.id,
             user_2=user_2.id,
             started_at='2000-01-01 00:00:00'
@@ -161,7 +161,7 @@ class TestBot(unittest.TestCase):
             mock.call(user_2_chat_id, 'message_chat_close_user', mock.ANY)
         ])
 
-        self.assertEqual(UserFriend.find(chat.id), None)
+        self.assertEqual(Chat.find(chat_1.id), None)
 
     def __run_bot(self, event, data=()):
         bot = Bot({

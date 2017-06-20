@@ -1,6 +1,6 @@
 from orator.orm import scope
 from . model import db, Model
-from . user_friend import UserFriend
+from . chat import Chat
 
 
 class User(Model):
@@ -20,12 +20,12 @@ class User(Model):
         return self.update({'status': self.statuses[status]})
 
     def friend(self):
-        uf = UserFriend.where('user_1', self.id).or_where('user_2', self.id).first()
+        uf = Chat.where('user_1', self.id).or_where('user_2', self.id).first()
 
         if uf:
             if uf.user_2 == self.id:
                 friend_id = uf.user_1
-                uf.update({'started_at': None})
+                uf.disable_auto_close()
             else:
                 friend_id = uf.user_2
         else:
@@ -34,7 +34,7 @@ class User(Model):
         return User.find(friend_id)
 
     def del_friend(self):
-        return UserFriend.where('user_1', self.id).or_where('user_2', self.id).delete()
+        return Chat.where('user_1', self.id).or_where('user_2', self.id).delete()
 
     def add_friend(self):
         added = False
@@ -49,7 +49,7 @@ class User(Model):
                      .first()
 
         try:
-            UserFriend.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
+            Chat.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
             added = True
         except:
             pass # todo logging
@@ -63,7 +63,7 @@ class User(Model):
 
     @scope
     def free(self, query):
-        users_list = UserFriend.select_raw('group_concat(user_1, ",", user_2) as ids').first()
+        users_list = Chat.select_raw('group_concat(user_1, ",", user_2) as ids').first()
 
         ids = []
         if users_list and users_list.ids:

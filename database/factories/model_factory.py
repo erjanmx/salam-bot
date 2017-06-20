@@ -1,6 +1,6 @@
 from orator.orm import Factory
 from src.models.user import User
-from src.models.user_friend import UserFriend
+from src.models.chat import Chat
 
 factory = Factory()
 
@@ -16,8 +16,8 @@ def users_factory(fake):
         'gender': 'M',
     }
 
-@factory.define(UserFriend)
-def userfriends_factory(fake):
+@factory.define(Chat)
+def chats_factory(fake):
     return {
         'started_at': None,
     }
