@@ -20,14 +20,14 @@ class User(Model):
         return self.update({'status': self.statuses[status]})
 
     def friend(self):
-        uf = Chat.where('user_1', self.id).or_where('user_2', self.id).first()
+        u_chat = Chat.where('user_1', self.id).or_where('user_2', self.id).first()
 
-        if uf:
-            if uf.user_2 == self.id:
-                friend_id = uf.user_1
-                uf.disable_auto_close()
+        if u_chat:
+            if u_chat.user_2 == self.id:
+                friend_id = u_chat.user_1
+                u_chat.disable_auto_close()
             else:
-                friend_id = uf.user_2
+                friend_id = u_chat.user_2
         else:
             friend_id = 0
 
