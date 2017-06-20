@@ -17,7 +17,12 @@
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
+cp config/app.example.py config/app.py
+cp config/database.example.py config/database.py
 ```
+
+После, необходимо задать настройки приложения в `config/app.py` и подключения к базе `config/database.py`
+
 
 ### Закрытие неактивных чатов
 

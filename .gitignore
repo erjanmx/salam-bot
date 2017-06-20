@@ -1,2 +1,10 @@
+venv/
+
 .idea/
 __pycache__
+*.pyc
+
+config/app.py
+config/database.py
+
+salam-bot.log
