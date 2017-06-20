@@ -22,7 +22,7 @@ class TestNambaOne(unittest.TestCase):
         name = 'test_name'
         image = 'test_image'
 
-        result = self.namba_one.create_chat(user_id, name, image)
+        self.namba_one.create_chat(user_id, name, image)
         
         post_mock.assert_called_once_with(
             'https://api.namba1.co/chats/create', 
@@ -42,11 +42,11 @@ class TestNambaOne(unittest.TestCase):
         
         post_mock.assert_called_once_with(
             'https://api.namba1.co/chats/1/write', 
-            data = {
+            data={
                 'content': 'Hi There!', 
                 'type': 'text/plain', 
             }, 
-            headers = {
+            headers={
                 'X-Namba-Auth-Token': self.test_token
             }
         )

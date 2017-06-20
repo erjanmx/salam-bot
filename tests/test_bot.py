@@ -39,7 +39,6 @@ class TestBot(unittest.TestCase):
         n1_create_chat.assert_called_once_with(user_id)
         n1_send_message.assert_called_once_with(chat_id, locales[lang]['message_choose_language'], mock.ANY)
 
-
     def test_event_user_unfollow(self):
         user = factory(User).create(status=User.statuses['active'])
         
@@ -84,7 +83,7 @@ class TestBot(unittest.TestCase):
         user_id = 1
         user_chat_id = 10
         lang = 'ru'
-        user = factory(User).create(id=user_id, chat_id=user_chat_id)
+        factory(User).create(id=user_id, chat_id=user_chat_id)
         
         self.__run_bot('message/new', {
             'sender_id': user_id,
@@ -151,7 +150,8 @@ class TestBot(unittest.TestCase):
 
         self.assertEqual(Chat.find(chat_1.id), None)
 
-    def __run_bot(self, event, data=()):
+    @staticmethod
+    def __run_bot(event, data=()):
         bot = Bot({
             'event': event,
             'data': data,
