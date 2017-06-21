@@ -63,7 +63,7 @@ class Bot:
             return
 
         if self.request['type'] == 'text/plain':
-            content = '{}: {}'.format(locales[user.lang]['text_friend'], content)
+            content = '{}: {}'.format(locales[user.friend().lang]['text_friend'], content)
 
         self.__send_message(user.friend(), content, self.request['type'])
 
