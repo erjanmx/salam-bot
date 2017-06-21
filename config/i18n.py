@@ -1,6 +1,6 @@
 locales = {
     '-': {
-        'message_choose_language': 'Тилди таңдаңыз. Выберите язык\n\n'
+        'message_choose_language': 'Тилди тандаңыз. Выберите язык\n\n'
                                    ' 1️⃣ Кыргызча\n'
                                    ' 2️⃣ Русский'
     },
