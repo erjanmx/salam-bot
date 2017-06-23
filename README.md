@@ -23,6 +23,11 @@ cp config/database.example.py config/database.py
 
 После, необходимо задать настройки приложения в `config/app.py` и подключения к базе `config/database.py`
 
+и выполнить создание необходимых таблиц используя команду
+
+```
+orator migrate -c config/database.py -p database/migrations/ -f
+```
 
 ### Закрытие неактивных чатов
 
