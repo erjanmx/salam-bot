@@ -1,6 +1,9 @@
+import logging
 from orator.orm import scope
 from . model import db, Model
 from . chat import Chat
+
+logging.getLogger("salam-bot.log")
 
 
 class User(Model):
@@ -52,7 +55,7 @@ class User(Model):
             Chat.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
             added = True
         except:
-            pass # todo logging
+            logging.error('Failed to add friend for user: {}'.format(self.id), exc_info=True)
 
         return added            
 
