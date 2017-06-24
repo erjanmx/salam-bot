@@ -1,4 +1,4 @@
-import logging as log
+import logging
 from . models.user import User
 from config.i18n import locales
 from . namba_one import NambaOne
@@ -6,7 +6,7 @@ from . bot_commands import BotCommands
 from config.app import NAMBA_ONE_API_TOKEN
 from . models.chat import Chat
 
-log.basicConfig(filename='salam-bot.log', level=log.INFO)
+logging.getLogger("salam-bot.log")
 
 
 class Bot:
@@ -28,7 +28,7 @@ class Bot:
         self.api_client = NambaOne(NAMBA_ONE_API_TOKEN)
 
     def run(self):
-        # log.info(self.event)
+        logging.info(self.event)
         getattr(self, self.events[self.event])()
 
     def event_user_follow(self):
