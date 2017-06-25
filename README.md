@@ -17,16 +17,16 @@
 virtualenv venv
 source venv/bin/activate
 pip install -r requirements.txt
-cp config/app.example.py config/app.py
-cp config/database.example.py config/database.py
+
+cp .env.example .env
 ```
 
-После, необходимо задать настройки приложения в `config/app.py` и подключения к базе `config/database.py`
+После, необходимо задать настройки приложения и подключения к базе в `.env` (или задать значения в переменных окружения)
 
-и выполнить создание необходимых таблиц используя команду
+и выполнить создание необходимых таблиц используя команду для миграции
 
 ```
-orator migrate -c config/database.py -p database/migrations/ -f
+orator migrate -c config/settings.py -p database/migrations/ -f
 ```
 
 ### Закрытие неактивных чатов
