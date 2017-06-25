@@ -63,6 +63,7 @@ class User(Model):
     @scope
     def active(self, query):
         return query.where('status', '<>', User.statuses['not_active']) \
+                    .where('lang', '<>', '-') \
                     .where_raw('updated_at > now() - interval 5 day')
 
     @scope
