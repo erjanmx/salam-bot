@@ -51,11 +51,12 @@ class User(Model):
                      .order_by(db.raw('RAND()')) \
                      .first()
 
-        try:
-            Chat.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
-            added = True
-        except:
-            logging.error('Failed to add friend for user: {}'.format(self.id), exc_info=True)
+        if friend:
+            try:
+                Chat.create(user_1=self.id, user_2=friend.id, started_at=db.raw('now()'))
+                added = True
+            except:
+                logging.error('Failed to add friend {} for user: {}'.format(friend.id, self.id), exc_info=True)
 
         return added            
 
