@@ -35,8 +35,8 @@ class TestUser(unittest.TestCase):
         self.assertFalse(user_1.add_friend())
 
     def test_add_friend_with_two_users(self):
-        user_1 = factory(User).create()
-        user_2 = factory(User).create()
+        user_1 = factory(User).create(lang='ru')
+        user_2 = factory(User).create(lang='ru')
 
         user_1.add_friend()
 
@@ -44,10 +44,10 @@ class TestUser(unittest.TestCase):
         self.assertEqual(user_2.friend().id, user_1.id)
 
     def test_add_friend_with_different_users(self):
-        active_user_1 = factory(User).create(status=User.statuses['active'])
-        active_user_2 = factory(User).create(status=User.statuses['active'])
-        factory(User).make(status=User.statuses['idle'])
-        factory(User).make(status=User.statuses['not_active'])
+        active_user_1 = factory(User).create(status=User.statuses['active'], lang='ru')
+        active_user_2 = factory(User).create(status=User.statuses['active'], lang='ru')
+        factory(User).make(status=User.statuses['idle'], lang='ru')
+        factory(User).make(status=User.statuses['not_active'], lang='ru')
 
         active_user_1.add_friend()
 
