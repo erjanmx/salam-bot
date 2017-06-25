@@ -16,6 +16,7 @@ def users_factory(fake):
         'gender': 'M',
     }
 
+
 @factory.define(Chat)
 def chats_factory(fake):
     return {

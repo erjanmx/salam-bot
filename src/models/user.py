@@ -1,7 +1,7 @@
 import logging
+from . chat import Chat
 from orator.orm import scope
 from . model import db, Model
-from . chat import Chat
 
 logging.getLogger("salam-bot.log")
 

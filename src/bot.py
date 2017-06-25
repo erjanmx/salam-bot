@@ -1,10 +1,10 @@
 import logging
 from . models.user import User
+from . models.chat import Chat
 from config.i18n import locales
 from . namba_one import NambaOne
 from . bot_commands import BotCommands
 from config.settings import NAMBA_ONE_API_TOKEN
-from . models.chat import Chat
 
 logging.getLogger("salam-bot.log")
 
