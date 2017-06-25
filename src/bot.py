@@ -3,7 +3,7 @@ from . models.user import User
 from config.i18n import locales
 from . namba_one import NambaOne
 from . bot_commands import BotCommands
-from config.app import NAMBA_ONE_API_TOKEN
+from config.settings import NAMBA_ONE_API_TOKEN
 from . models.chat import Chat
 
 logging.getLogger("salam-bot.log")

@@ -1,7 +1,7 @@
 import json
 import logging
 from src.bot import Bot
-from config.app import *
+from config.settings import *
 from flask import Flask, request, abort, jsonify
 
 app = Flask(__name__)

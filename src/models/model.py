@@ -1,5 +1,5 @@
 from orator import DatabaseManager, Model
-from config.database import databases
+from config.settings import DATABASES
 
-db = DatabaseManager(databases)
+db = DatabaseManager(DATABASES)
 Model.set_connection_resolver(db)

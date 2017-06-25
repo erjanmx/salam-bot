@@ -6,9 +6,7 @@ python:
 install: "pip install -r requirements.txt"
 script: python -m unittest
 before_script:
-  - cp config/app.example.py config/app.py
-  - cp config/database.example.py config/database.py
   - mysql -u root -e 'CREATE DATABASE salam_bot;'
-  - orator migrate -c config/database.py -p database/migrations/ -f
+  - orator migrate -c config/settings.py -p database/migrations/ -f
 notifications:
   email: false
