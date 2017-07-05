@@ -22,7 +22,6 @@ class Bot:
     }
 
     def __init__(self, request_body):
-        self.user = None
         self.event = request_body['event']
         self.request = request_body['data']
         self.api_client = NambaOne(NAMBA_ONE_API_TOKEN)
@@ -32,7 +31,7 @@ class Bot:
         getattr(self, self.events[self.event])()
 
     def event_user_follow(self):
-        self.user = User.update_or_create({'id': self.request['id']}, {
+        user = User.update_or_create({'id': self.request['id']}, {
             'lang': '-',
             'name': self.request['name'],
             'gender': self.request['gender'],
@@ -41,7 +40,7 @@ class Bot:
             'chat_id': self.api_client.create_chat(self.request['id'])['id']
         })
 
-        self.__send_message(self.user, 'message_choose_language')
+        self.__send_message(user, 'message_choose_language')
 
     def event_user_unfollow(self):
         user = User.find_or_fail(self.request['id'])
