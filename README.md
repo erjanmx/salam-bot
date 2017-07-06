@@ -34,13 +34,13 @@ pip install -r requirements.txt
 ## Запуск
 
 Приложение настраивается через `.env` файл или указав значения в переменных окружения
-```
+```bash
 cp .env.example .env
 ```
 
 После задания настроек необходимо запустить команду миграции для создания необходимых таблиц, предварительно создав базу данных
 
-```
+```bash
 orator migrate -c config/settings.py -p database/migrations/ -f
 ```
 
@@ -56,7 +56,7 @@ python app.py
 
 Для этого необходимо поставить вызов по расписанию endpoint-a приложения с соответствующими параметрами, а именно
 
-```
+```bash
 curl -X POST \
   'url' \
   -H 'content-type: application/json' \
