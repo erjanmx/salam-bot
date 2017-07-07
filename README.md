@@ -50,6 +50,18 @@ orator migrate -c config/settings.py -p database/migrations/ -f
 python app.py
 ```
 
+После запуска можно отправить запрос 
+```bash
+curl -X POST \
+  http://127.0.0.1:5000?<TOKEN_KEY>=<TOKEN_VALUE> \
+  -H 'content-type: application/json' \
+  -d '{"event":"cron/close_idle_chats","data":""}'
+```
+
+В ответ должно придти 200 Ok c json
+```json
+{"success": true}
+```
 ### Закрытие неактивных чатов
 
 Если после создания чата собеседник не ответил в течение трех минут то чат должен быть закрыт с уведомлением обоих сторон
