@@ -6,8 +6,7 @@ from flask import Flask, request, abort, jsonify
 
 app = Flask(__name__)
 
-logging.basicConfig(filename='salam-bot.log')
-
+logging.basicConfig(filename='salam-bot.log', level=logging.DEBUG, format='%(asctime)s %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
 
 @app.route('/', methods=['POST'])
 def entry():
