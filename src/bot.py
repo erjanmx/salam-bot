@@ -12,7 +12,7 @@ logging.getLogger("salam-bot.log")
 class Bot:
 
     events = {
-        'new/chat': 'event_user_follow',
+        'chat/new': 'event_user_follow',
         'message/new': 'event_new_message',
         'user/follow': 'event_user_follow',
         'user/unfollow': 'event_user_unfollow',
