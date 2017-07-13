@@ -1,9 +1,9 @@
 import logging
 from . models.user import User
 from . models.chat import Chat
-from config.i18n import locales
 from . namba_one import NambaOne
 from . bot_commands import BotCommands
+from config.i18n import locales, default_locale
 from config.settings import NAMBA_ONE_API_TOKEN
 
 logging.getLogger("salam-bot.log")
@@ -32,7 +32,7 @@ class Bot:
 
     def event_user_follow(self):
         user = User.update_or_create({'id': self.request['id']}, {
-            'lang': '-',
+            'lang': default_locale,
             'name': self.request['name'],
             'gender': self.request['gender'],
             'status': User.statuses['active'],
@@ -40,7 +40,8 @@ class Bot:
             'chat_id': self.api_client.create_chat(self.request['id'])['id']
         })
 
-        self.__send_message(user, 'message_choose_language')
+        message = 'message_choose_language' if user.lang == '-' else 'message_help'
+        self.__send_message(user, message)
 
     def event_user_unfollow(self):
         user = User.find_or_fail(self.request['id'])
