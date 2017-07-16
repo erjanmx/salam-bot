@@ -12,7 +12,7 @@ logging.getLogger("salam-bot.log")
 class Bot:
 
     events = {
-        'chat/new': 'event_user_follow',
+        'chat/new': 'event_new_chat',
         'message/new': 'event_new_message',
         'user/follow': 'event_user_follow',
         'user/unfollow': 'event_user_unfollow',
@@ -66,6 +66,10 @@ class Bot:
             content = '{}: {}'.format(locales[user.friend().lang]['text_friend'], content)
 
         self.__send_message(user.friend(), content, self.request['type'])
+
+    def event_new_chat(self):
+        self.request = self.request['user']
+        self.event_user_follow()
 
     def event_message_update(self):
         pass
