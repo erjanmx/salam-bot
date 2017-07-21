@@ -57,15 +57,17 @@ class Bot:
         if getattr(BotCommands(user, self.__send_message), 'run')(content.lower()):
             return
 
-        if not user.friend():
+        friend = user.friend()
+
+        if not friend:
             user.set_status('active')
             self.__send_message(user, 'message_no_friend')
             return
 
         if self.request['type'] == 'text/plain':
-            content = '{}: {}'.format(locales[user.friend().lang]['text_friend'], content)
+            content = '{}: {}'.format(locales[friend.lang]['text_friend'], content)
 
-        self.__send_message(user.friend(), content, self.request['type'])
+        self.__send_message(friend, content, self.request['type'])
 
     def event_new_chat(self):
         self.request = self.request['user']
