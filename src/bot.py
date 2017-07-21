@@ -83,7 +83,7 @@ class Bot:
             self.__send_message(User.find(chat.user_2), 'message_chat_close_user')
             chat.delete()
 
-    def __send_message(self, user, content, content_type = 'text/plain'):
+    def __send_message(self, user, content, content_type='text/plain'):
         if content in locales[user.lang]:
             content = locales[user.lang][content]
 
