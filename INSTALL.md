@@ -1,6 +1,6 @@
 ## Установка
 
-Приложение работает на [Flask](http://flask.pocoo.org/), в для работы с БД используется [orator](https://orator-orm.com/)
+Приложение работает на [Flask](http://flask.pocoo.org/), для работы с БД используется [orator](https://orator-orm.com/)
 
 ### Создание и активация virtualenv
 
